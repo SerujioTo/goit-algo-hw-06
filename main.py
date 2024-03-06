@@ -1,6 +1,14 @@
 from collections import UserDict
 from typing import Optional
 
+def is_valid_phone_number(value):
+    try:
+        int(value)
+        assert len(value) == 10, "Phone number isnt 10 digits length"
+        return True
+    except (ValueError or AssertionError):
+        return False
+
 
 class Field:
     def __init__(self, value):
@@ -20,8 +28,10 @@ class Name(Field):
 
 class Phone(Field):
     def __init__(self, value):
-        if len(value) == 10:
+        if is_valid_phone_number(value):
             super().__init__(value)
+        else:
+            raise ValueError("Phone number isnt valid it must have 10 digits of numbers")
 
     def __str__(self):
         return str(self.value)
